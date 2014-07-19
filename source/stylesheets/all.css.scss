@@ -3,10 +3,13 @@
 @import 'compass';
 @include global-reset;
 
-#canvas {
+#container {
+  width:  480px;
+  height: 480px;
+
   border: 1px solid black;
 }
 
-.kurukuru {
-  @include rotate(90deg);
+#canvas {
+//  @include rotate(90deg);
 }

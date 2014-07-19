@@ -4,10 +4,10 @@
 $ ->
   materials = {
     images: {
-      inactive:   "http://dummyimage.com/100x30.png&text=inac"
-      raiseLeft:  "http://dummyimage.com/100x30.png&text=left"
-      raiseRight: "http://dummyimage.com/100x30.png&text=right"
-      enemy:      "http://dummyimage.com/30x30.png&text=e"
+      inactive:   "../images/me/inactive.png"
+      raiseLeft:  "../images/me/raiseLeft.png"
+      raiseRight: "../images/me/raiseRight.png"
+      enemy:      "http://dummyimage.com/15.png&text=e"
     }
     fonts: {
       google: {
@@ -47,7 +47,7 @@ $ ->
     called: (stage) ->
       # draw character
       @me = @createElement()
-      @me.drawImage "inactive", 190, 225
+      @me.drawImage "inactive", 210, 233
       stage.append(@me)
 
     ready: (stage, params) ->
@@ -75,8 +75,8 @@ $ ->
     called: (stage) ->
       # draw character first to avoid glitch
       @me = Class.New("Entity", [stage])
-      @me.rect(100, 30)
-      @me.position(190, 225)
+      @me.rect(60, 15)
+      @me.position(210, 233)
       @me.el.drawImage("inactive")
       stage.append(@me.el)
 
@@ -90,8 +90,8 @@ $ ->
 
       # summon enemy
       @enemy = Class.New("Entity", [stage])
-      @enemy.rect(30)
-      @enemy.position(270*(1 - direction) - 30, 225)
+      @enemy.rect(15)
+      @enemy.position(270*(1 - direction) - 30, 233)
       @enemy.el.drawImage("enemy")
       stage.append(@enemy.el)
 
@@ -118,10 +118,19 @@ $ ->
           else
             canvas.Scene.call("Score", {params: {score: @score}})
 
+      renderMe = () =>
+        if @state == "inactive"
+          @me.rect(60, 15)
+          @me.position(210, 233)
+        else
+          @me.rect(100, 15)
+          @me.position(190, 233)
+        @me.el.drawImage(@state)
+
       processLock()
       judgeAndCall()
+      renderMe()
 
-      @me.el.drawImage(@state)
       @enemy.move(@speed)
       stage.refresh()
   }
