@@ -87,6 +87,7 @@ $ ->
       @speed = direction * (@score + 2)
       @stateToWin = ["raiseRight", "raiseLeft"][(direction+1)/2]
       @lock  = 0
+      @result = ""
 
       # summon enemy
       @enemy = Class.New("Entity", [stage])
@@ -105,33 +106,34 @@ $ ->
           @lock = 60
 
     render: (stage) ->
-      processLock = () =>
-        if @lock == 0
-          @state = "inactive"
-        else
-          @lock -= 1
+      # decrement lock
+      if @lock == 0
+        @state = "inactive"
+      else
+        @lock -= 1
 
-      judgeAndCall = () =>
-        @enemy.hit [@me], (el) =>
-          if @state == @stateToWin
+      # render character
+      if @state == "inactive"
+        @me.rect(60, 15)
+        @me.position(210, 233)
+      else
+        @me.rect(100, 15)
+        @me.position(190, 233)
+      @me.el.drawImage(@state)
+
+      switch @result
+        when "win"
+          @enemy.move(-@speed, -Math.abs(@speed))
+          if (@enemy.el.x < -70 or 550 < @enemy.el.x)
             canvas.Scene.call("Wait",  {params: {score: @score+1}})
-          else
-            canvas.Scene.call("Score", {params: {score: @score}})
+        when "lose"
+          canvas.Scene.call("Score", {params: {score: @score}})
+        when ""
+          @enemy.move(@speed)
+          # judge win or lose
+          @enemy.hit [@me], (el) =>
+            @result = (if @state == @stateToWin then "win" else "lose")
 
-      renderMe = () =>
-        if @state == "inactive"
-          @me.rect(60, 15)
-          @me.position(210, 233)
-        else
-          @me.rect(100, 15)
-          @me.position(190, 233)
-        @me.el.drawImage(@state)
-
-      processLock()
-      judgeAndCall()
-      renderMe()
-
-      @enemy.move(@speed)
       stage.refresh()
   }
 
@@ -146,13 +148,13 @@ $ ->
       result.fillText("SCORE: #{score}", 200, 200)
       stage.append(result)
 
-      escToTitle = @createElement()
-      escToTitle.font = '16pt "Share"'
-      escToTitle.fillText("ESC TO TITLE", 185, 350)
-      stage.append(escToTitle)
+      enterToRetry = @createElement()
+      enterToRetry.font = '16pt "Share"'
+      enterToRetry.fillText("ENTER TO RETRY", 170, 350)
+      stage.append(enterToRetry)
 
-      canvas.Input.keyDown Input.Esc, () ->
-        canvas.Scene.call("Title")
+      canvas.Input.keyDown Input.Enter, () ->
+        canvas.Scene.call("Wait", {params: {score: 0}})
 
     render: (stage) ->
       stage.refresh()
