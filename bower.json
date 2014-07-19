@@ -1,0 +1,19 @@
+{
+  "name": "kurukuru",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Joe-noh/kurukuru",
+  "authors": [
+    "Joe-noh <goflb.jh@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "crafty": "0.6.2"
+  }
+}
