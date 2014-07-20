@@ -1,13 +1,13 @@
 #= require jquery
+#= require velocity/jquery.velocity.min.js
 #= require_tree .
 
 $ ->
   materials = {
     images: {
-      inactive:   "../images/me/inactive.png"
-      raiseLeft:  "../images/me/raiseLeft.png"
-      raiseRight: "../images/me/raiseRight.png"
-      enemy:      "http://dummyimage.com/15.png&text=e"
+      inactive:   "images/me/inactive.png"
+      raiseLeft:  "images/me/raiseLeft.png"
+      raiseRight: "images/me/raiseRight.png"
     }
     fonts: {
       google: {
@@ -52,7 +52,14 @@ $ ->
 
     ready: (stage, params) ->
       @params = params
-      @time  = Math.floor(Math.random() * 50) + 100
+      @time  = CE.random(90, 120)
+
+      # kurukuru
+      score = @params.score
+      if score >= 3
+        max = Math.pow(2, score-3) * 90
+        angle = CE.random(Math.floor(max*0.8), max)
+        $('#canvas').velocity({rotateZ: "#{angle}deg"}, 40*score + 900, "linear")
 
     render: (stage) ->
       isTimeToFight = () =>
@@ -84,16 +91,19 @@ $ ->
       @state = "inactive"
       @score = params.score
       direction = [1, -1][Math.round(Math.random())]
-      @speed = direction * (@score + 2)
+      speed = Math.min(0.7*@score + 1, 6)
+      @speed = direction * (@score*0.7 + 1)
       @stateToWin = ["raiseRight", "raiseLeft"][(direction+1)/2]
       @lock  = 0
       @result = ""
 
       # summon enemy
       @enemy = Class.New("Entity", [stage])
-      @enemy.rect(15)
+      @enemy.rect(7.5)
       @enemy.position(270*(1 - direction) - 30, 233)
-      @enemy.el.drawImage("enemy")
+      @enemy.el.strokeStyle = "222222"
+      @enemy.el.lineWidth = 2
+      @enemy.el.strokeCircle(7.5)
       stage.append(@enemy.el)
 
       canvas.Input.keyDown Input.Left, () =>
@@ -150,11 +160,8 @@ $ ->
 
       enterToRetry = @createElement()
       enterToRetry.font = '16pt "Share"'
-      enterToRetry.fillText("ENTER TO RETRY", 170, 350)
+      enterToRetry.fillText("GAME OVER", 190, 350)
       stage.append(enterToRetry)
-
-      canvas.Input.keyDown Input.Enter, () ->
-        canvas.Scene.call("Wait", {params: {score: 0}})
 
     render: (stage) ->
       stage.refresh()
