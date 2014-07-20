@@ -58,7 +58,7 @@ $ ->
       score = @params.score
       if score >= 3
         max = Math.pow(2, score-3) * 90
-        angle = CE.random(max*0.8, max)
+        angle = CE.random(Math.floor(max*0.8), max)
         $('#canvas').velocity({rotateZ: "#{angle}deg"}, 40*score + 900, "linear")
 
     render: (stage) ->
