@@ -71,3 +71,6 @@ configure :build do
   # set :http_prefix, "/Content/images/"
 end
 
+after_configuration do
+  sprockets.append_path "#{root}/bower_components/"
+end

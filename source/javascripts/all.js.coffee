@@ -1,4 +1,5 @@
 #= require jquery
+#= require velocity/jquery.velocity.min.js
 #= require_tree .
 
 $ ->
@@ -52,7 +53,14 @@ $ ->
 
     ready: (stage, params) ->
       @params = params
-      @time  = Math.floor(Math.random() * 50) + 100
+      @time  = CE.random(90, 120)
+
+      # kurukuru
+      score = @params.score
+      if score >= 3
+        max = Math.pow(2, score-3) * 90
+        angle = CE.random(max*0.8, max)
+        $('#canvas').velocity({rotateZ: "#{angle}deg"}, 40*score + 900, "linear")
 
     render: (stage) ->
       isTimeToFight = () =>
@@ -84,16 +92,19 @@ $ ->
       @state = "inactive"
       @score = params.score
       direction = [1, -1][Math.round(Math.random())]
-      @speed = direction * (@score + 2)
+      speed = Math.min(0.7*@score + 1, 6)
+      @speed = direction * (@score*0.7 + 1)
       @stateToWin = ["raiseRight", "raiseLeft"][(direction+1)/2]
       @lock  = 0
       @result = ""
 
       # summon enemy
       @enemy = Class.New("Entity", [stage])
-      @enemy.rect(15)
+      @enemy.rect(7.5)
       @enemy.position(270*(1 - direction) - 30, 233)
-      @enemy.el.drawImage("enemy")
+      @enemy.el.strokeStyle = "222222"
+      @enemy.el.lineWidth = 2
+      @enemy.el.strokeCircle(7.5)
       stage.append(@enemy.el)
 
       canvas.Input.keyDown Input.Left, () =>
