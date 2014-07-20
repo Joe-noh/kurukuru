@@ -161,11 +161,8 @@ $ ->
 
       enterToRetry = @createElement()
       enterToRetry.font = '16pt "Share"'
-      enterToRetry.fillText("ENTER TO RETRY", 170, 350)
+      enterToRetry.fillText("GAME OVER", 190, 350)
       stage.append(enterToRetry)
-
-      canvas.Input.keyDown Input.Enter, () ->
-        canvas.Scene.call("Wait", {params: {score: 0}})
 
     render: (stage) ->
       stage.refresh()
