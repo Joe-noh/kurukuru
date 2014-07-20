@@ -9825,8 +9825,7 @@ var fs;if(typeof(require)!=="undefined"){fs=require("fs")}function Kernel(b,a){t
       images: {
         inactive: "../images/me/inactive.png",
         raiseLeft: "../images/me/raiseLeft.png",
-        raiseRight: "../images/me/raiseRight.png",
-        enemy: "http://dummyimage.com/15.png&text=e"
+        raiseRight: "../images/me/raiseRight.png"
       },
       fonts: {
         google: {
