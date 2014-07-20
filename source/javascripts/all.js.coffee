@@ -59,7 +59,7 @@ $ ->
       if score >= 3
         max = Math.pow(2, score-3) * 90
         angle = CE.random(Math.floor(max*0.8), max)
-        $('#canvas').velocity({rotateZ: "#{angle}deg"}, 40*score + 900, "linear")
+        $('#canvas').velocity({rotateZ: "#{angle}deg"}, 60*score + 900, "linear")
 
     render: (stage) ->
       isTimeToFight = () =>
@@ -91,8 +91,7 @@ $ ->
       @state = "inactive"
       @score = params.score
       direction = [1, -1][Math.round(Math.random())]
-      speed = Math.min(0.7*@score + 1, 6)
-      @speed = direction * (@score*0.7 + 1)
+      @speed = direction * (0.7*@score + 1)
       @stateToWin = ["raiseRight", "raiseLeft"][(direction+1)/2]
       @lock  = 0
       @result = ""
