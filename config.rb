@@ -65,10 +65,16 @@ configure :build do
   # activate :asset_hash
 
   # Use relative URLs
-  # activate :relative_assets
+  activate :relative_assets
 
   # Or use a different image path
-  # set :http_prefix, "/Content/images/"
+  # set :http_prefix, "/kurukuru/images/"
+end
+
+activate :deploy do |d|
+  d.build_before = true
+  d.method = :git
+  d.branch = 'gh-pages'
 end
 
 after_configuration do

@@ -5,10 +5,9 @@
 $ ->
   materials = {
     images: {
-      inactive:   "../images/me/inactive.png"
-      raiseLeft:  "../images/me/raiseLeft.png"
-      raiseRight: "../images/me/raiseRight.png"
-      enemy:      "http://dummyimage.com/15.png&text=e"
+      inactive:   "images/me/inactive.png"
+      raiseLeft:  "images/me/raiseLeft.png"
+      raiseRight: "images/me/raiseRight.png"
     }
     fonts: {
       google: {
