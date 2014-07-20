@@ -9823,9 +9823,9 @@ var fs;if(typeof(require)!=="undefined"){fs=require("fs")}function Kernel(b,a){t
     var canvas, materials;
     materials = {
       images: {
-        inactive: "../images/me/inactive.png",
-        raiseLeft: "../images/me/raiseLeft.png",
-        raiseRight: "../images/me/raiseRight.png"
+        inactive: "images/me/inactive.png",
+        raiseLeft: "images/me/raiseLeft.png",
+        raiseRight: "images/me/raiseRight.png"
       },
       fonts: {
         google: {
